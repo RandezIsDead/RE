@@ -1,0 +1,138 @@
+buttons.png
+size: 450, 1909
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+achievement
+  rotate: false
+  xy: 156, 320
+  size: 150, 189
+  orig: 150, 189
+  offset: 0, 0
+  index: -1
+achievementPressed
+  rotate: false
+  xy: 0, 509
+  size: 150, 189
+  orig: 150, 189
+  offset: 0, 0
+  index: -1
+cl
+  rotate: false
+  xy: 150, 509
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+credits
+  rotate: false
+  xy: 300, 80
+  size: 150, 102
+  orig: 150, 102
+  offset: 0, 0
+  index: -1
+creditsPressed
+  rotate: false
+  xy: 0, 182
+  size: 150, 102
+  orig: 150, 102
+  offset: 0, 0
+  index: -1
+errOk
+  rotate: false
+  xy: 164, 0
+  size: 168, 80
+  orig: 168, 80
+  offset: 0, 0
+  index: -1
+exit
+  rotate: false
+  xy: 0, 709
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1
+exitPressed
+  rotate: false
+  xy: 0, 1009
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1
+fight
+  rotate: false
+  xy: 0, 320
+  size: 156, 156
+  orig: 156, 156
+  offset: 0, 0
+  index: -1
+ok
+  rotate: false
+  xy: 0, 80
+  size: 300, 90
+  orig: 300, 90
+  offset: 0, 0
+  index: -1
+settings
+  rotate: false
+  xy: 300, 1009
+  size: 150, 300
+  orig: 150, 300
+  offset: 0, 0
+  index: -1
+settingsPressed
+  rotate: false
+  xy: 0, 1309
+  size: 150, 300
+  orig: 150, 300
+  offset: 0, 0
+  index: -1
+skill_varity
+  rotate: false
+  xy: 150, 182
+  size: 240, 130
+  orig: 240, 130
+  offset: 0, 0
+  index: -1
+smartButton
+  rotate: false
+  xy: 350, 509
+  size: 100, 200
+  orig: 100, 200
+  offset: 0, 0
+  index: -1
+speedUp
+  rotate: false
+  xy: 36, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+startButton
+  rotate: false
+  xy: 150, 1309
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1
+startButtonPressed
+  rotate: false
+  xy: 0, 1609
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1
+switch
+  rotate: false
+  xy: 0, 0
+  size: 36, 36
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+useButton
+  rotate: false
+  xy: 100, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

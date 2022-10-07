@@ -1,0 +1,201 @@
+smart.png
+size: 1020, 485
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+backSmart
+  rotate: false
+  xy: 745, 45
+  size: 120, 70
+  orig: 120, 70
+  offset: 0, 0
+  index: -1
+cancel
+  rotate: false
+  xy: 120, 115
+  size: 300, 90
+  orig: 300, 90
+  offset: 0, 0
+  index: -1
+chat
+  rotate: false
+  xy: 300, 205
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1
+chips
+  rotate: false
+  xy: 440, 205
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1
+chrome
+  rotate: false
+  xy: 580, 205
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1
+exitSett
+  rotate: false
+  xy: 480, 0
+  size: 220, 45
+  orig: 220, 45
+  offset: 0, 0
+  index: -1
+faq
+  rotate: false
+  xy: 720, 205
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1
+gameSett
+  rotate: false
+  xy: 700, 0
+  size: 220, 45
+  orig: 220, 45
+  offset: 0, 0
+  index: -1
+homeSmart
+  rotate: false
+  xy: 865, 45
+  size: 120, 70
+  orig: 120, 70
+  offset: 0, 0
+  index: -1
+housing
+  rotate: false
+  xy: 220, 45
+  size: 175, 65
+  orig: 175, 65
+  offset: 0, 0
+  index: -1
+inv
+  rotate: false
+  xy: 860, 205
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1
+ls
+  rotate: false
+  xy: 420, 115
+  size: 300, 90
+  orig: 300, 90
+  offset: 0, 0
+  index: -1
+moenv
+  rotate: false
+  xy: 0, 345
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1
+money
+  rotate: false
+  xy: 395, 45
+  size: 175, 65
+  orig: 175, 65
+  offset: 0, 0
+  index: -1
+ms
+  rotate: false
+  xy: 0, 0
+  size: 100, 16
+  orig: 100, 16
+  offset: 0, 0
+  index: -1
+music_button
+  rotate: false
+  xy: 140, 345
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1
+next
+  rotate: false
+  xy: 100, 0
+  size: 95, 35
+  orig: 95, 35
+  offset: 0, 0
+  index: -1
+pause
+  rotate: false
+  xy: 195, 0
+  size: 95, 35
+  orig: 95, 35
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 290, 0
+  size: 95, 35
+  orig: 95, 35
+  offset: 0, 0
+  index: -1
+previous
+  rotate: false
+  xy: 385, 0
+  size: 95, 35
+  orig: 95, 35
+  offset: 0, 0
+  index: -1
+products
+  rotate: false
+  xy: 570, 45
+  size: 175, 65
+  orig: 175, 65
+  offset: 0, 0
+  index: -1
+settings
+  rotate: false
+  xy: 280, 345
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1
+skills
+  rotate: false
+  xy: 420, 345
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1
+soundSett
+  rotate: false
+  xy: 0, 45
+  size: 220, 45
+  orig: 220, 45
+  offset: 0, 0
+  index: -1
+stats
+  rotate: false
+  xy: 0, 115
+  size: 120, 70
+  orig: 120, 70
+  offset: 0, 0
+  index: -1
+take
+  rotate: false
+  xy: 720, 115
+  size: 300, 90
+  orig: 300, 90
+  offset: 0, 0
+  index: -1
+use
+  rotate: false
+  xy: 0, 205
+  size: 300, 90
+  orig: 300, 90
+  offset: 0, 0
+  index: -1
+weapon
+  rotate: false
+  xy: 560, 345
+  size: 140, 140
+  orig: 140, 140
+  offset: 0, 0
+  index: -1

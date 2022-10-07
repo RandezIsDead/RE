@@ -1,0 +1,12 @@
+tr.png
+size: 10, 10
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+tr
+  rotate: false
+  xy: 0, 0
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1

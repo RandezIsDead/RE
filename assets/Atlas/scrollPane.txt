@@ -1,0 +1,40 @@
+scrollPane.png
+size: 60, 80
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: false
+  xy: 0, 30
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+hScroll
+  rotate: false
+  xy: 0, 10
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+hsKnob
+  rotate: false
+  xy: 0, 0
+  size: 50, 10
+  orig: 50, 10
+  offset: 0, 0
+  index: -1
+vScroll
+  rotate: false
+  xy: 20, 10
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+vsKnob
+  rotate: false
+  xy: 50, 30
+  size: 10, 50
+  orig: 10, 50
+  offset: 0, 0
+  index: -1

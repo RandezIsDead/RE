@@ -1,0 +1,19 @@
+sliderStyle.png
+size: 100, 69
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+forSlider
+  rotate: false
+  xy: 0, 0
+  size: 49, 49
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+slider
+  rotate: false
+  xy: 0, 49
+  size: 100, 20
+  orig: 100, 20
+  offset: 0, 0
+  index: -1
