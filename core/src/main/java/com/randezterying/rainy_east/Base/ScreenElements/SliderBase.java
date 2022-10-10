@@ -20,8 +20,8 @@ public class SliderBase extends BaseScreenElement {
         sliderStyle.knob = skin.getDrawable("forSlider");
 
         slider = new Slider(0, 1, 0.01f, false, sliderStyle);
-        slider.setPosition(x, y*(Assets.h/Assets.w));
-        slider.setSize(width, height*(Assets.h/Assets.w));
+        slider.setPosition(x, y*Assets.h/Assets.w);
+        slider.setSize(width, height*Assets.h/Assets.w);
 
         stage.addActor(slider);
     }

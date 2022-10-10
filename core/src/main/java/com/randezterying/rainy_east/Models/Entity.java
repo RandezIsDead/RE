@@ -19,15 +19,18 @@ public class Entity extends Actor {
     private float shake_timer = 0f;
     private final float moveDeadRadius = 4f;
     private float moveSpeed = 4f;
+    protected boolean isStanding = true;
 
     private float movePointX;
     private float movePointY;
 
-    private int hp;
-    private int sp;
+    private float hp;
+    private float sp;
 
     private int maxHp;
     private int maxSp;
+    private int tookWeight;
+    private int maxWeight;
     private int damage;
     private int defence;
     private int healing;
@@ -40,7 +43,7 @@ public class Entity extends Actor {
     private boolean dead = false;
 
     public Entity(float x, float y, float scalePercent) {
-        setPosition(x, y * (Assets.h / Assets.w));
+        setPosition(x, y * Assets.h/Assets.w);
         this.scalePercent = scalePercent;
 
         shapeRenderer = new ShapeRenderer();
@@ -60,6 +63,7 @@ public class Entity extends Actor {
         setHp(100);
         setMaxSp(100);
         setSp(100);
+        setMaxWeight(10);
     }
 
     public Entity() {
@@ -81,8 +85,8 @@ public class Entity extends Actor {
 //            if (shake_timer > 100) shake_timer = 0;
 
             batch.end();
-            int hpPercent = (getHp() * 100) / getMaxHp();
-            int spPercent = (getSp() * 100) / getMaxSp();
+            float hpPercent = (getHp() * 100) / getMaxHp();
+            float spPercent = (getSp() * 100) / getMaxSp();
             shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(Color.BLACK);
@@ -105,8 +109,12 @@ public class Entity extends Actor {
             if (sp <= 0) sp = 0;
 
             //Auto regen hp and sp
-            if (hp < maxHp) hp += Gdx.graphics.getDeltaTime() * 7;
-            if (sp < maxSp) sp += Gdx.graphics.getDeltaTime() * 7;
+            if (hp < maxHp) hp += 0.1f;
+            if (sp < maxSp) sp += 0.1f;
+
+            System.out.println(sp + " " + getOverweight() * 0.05f);
+
+            if (!isStanding) sp -= getOverweight() * 0.05f;
 
             // Evade CoolDown
             if (getEvadeCd() > 0) {
@@ -150,6 +158,7 @@ public class Entity extends Actor {
 
     private void animStand(Batch batch, float xLen, float yLen) {
         if (xLen < moveDeadRadius && xLen > -moveDeadRadius && yLen < moveDeadRadius && getY() > -moveDeadRadius) {
+            isStanding = true;
             batch.draw(head, getX(), getY(),50*scalePercent, 50*scalePercent);
             batch.draw(body, getX()-(5*scalePercent), getY()-(100*scalePercent),60*scalePercent, 100*scalePercent);
 
@@ -168,6 +177,7 @@ public class Entity extends Actor {
     private void animRunRight(Batch batch, float xLen) {
         if (getX() < getMovePointX() || (xLen < moveDeadRadius && xLen > -moveDeadRadius && getY() > getMovePointY())) {
             anim_timer += 0.2f;
+            isStanding = false;
 //            setY((float) (getY() + (Math.cos(shake_timer) * -1.3)));
             batch.draw(head, getX()+34*scalePercent, getY()-7, 25*scalePercent, 0, 50*scalePercent, 50*scalePercent, 1, 1, -20, 0, 0, 256, 256, false, false);
 
@@ -189,6 +199,7 @@ public class Entity extends Actor {
     private void animRunLeft(Batch batch, float xLen) {
         if (getX() > getMovePointX() || (xLen < moveDeadRadius && xLen > -moveDeadRadius && getY() < getMovePointY())) {
             anim_timer += 0.2f;
+            isStanding = false;
 //            setY((float) (getY() + (Math.cos(shake_timer) * -1.3)));
             batch.draw(head, getX()-34*scalePercent, getY()-7*scalePercent, 25*scalePercent, 0, 50*scalePercent, 50*scalePercent, 1, 1, 20, 0, 0, 256, 256, false, false);
 
@@ -222,14 +233,14 @@ public class Entity extends Actor {
         }
     }
 
-    public void attack(Entity entity) {
-        if (attackCd == 0) {
-            if (Math.abs(this.getX() - entity.getX()) < 80 && Math.abs(this.getY() - entity.getY()) < 80) {
-                entity.setHp(entity.getHp() - (this.getDamage() - entity.getDefence()));
-            }
-            attackCd = 1;
-        }
-    }
+//    public void attack(Entity entity) {
+//        if (attackCd == 0) {
+//            if (Math.abs(this.getX() - entity.getX()) < 80 && Math.abs(this.getY() - entity.getY()) < 80) {
+//                entity.setHp(entity.getHp() - (this.getDamage() - entity.getDefence()));
+//            }
+//            attackCd = 1;
+//        }
+//    }
 
     public void shot(Entity entity) {
         if (attackCd == 0) {
@@ -250,7 +261,7 @@ public class Entity extends Actor {
         if (hp > maxHp) hp = maxHp;
     }
 
-    public int getHp() {return hp;}
+    public float getHp() {return hp;}
 
     public void setHp(int hp) {
         if (hp < 0) hp = 0;
@@ -260,7 +271,7 @@ public class Entity extends Actor {
 
     public void setMaxHp(int maxHp) {this.maxHp = maxHp;}
     public int getMaxHp() {return maxHp;}
-    public int getSp() {return sp;}
+    public float getSp() {return sp;}
 
     public void setSp(int sp) {
         if (sp < 0) sp = 0;
@@ -269,6 +280,11 @@ public class Entity extends Actor {
     }
     public int getMaxSp() {return maxSp;}
     public void setMaxSp(int maxSp) {this.maxSp = maxSp;}
+    public int getTookWeight() {return tookWeight;}
+    public void setTookWeight(int tookWeight) {this.tookWeight = tookWeight;}
+    public int getMaxWeight() {return maxWeight;}
+    public float getOverweight() {return Math.max(getTookWeight() - getMaxWeight(), 0);}
+    public void setMaxWeight(int maxWeight) {this.maxWeight = maxWeight;}
     public int getDamage() {return damage;}
     public void setDamage(int damage) {this.damage = damage;}
     public int getDefence() {return defence;}

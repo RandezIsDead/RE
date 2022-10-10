@@ -23,7 +23,7 @@ public class BaseScreenElement extends Actor implements Disposable {
     public BaseScreenElement(float x) {
         xPos.add(x);
 
-        stage = new Stage(new StretchViewport(1000, 1000 * (Assets.h / Assets.w)));
+        stage = new Stage(new StretchViewport(1000, 1000 * Assets.h/Assets.w));
         Gdx.input.setInputProcessor(stage);
 
         font = new BitmapFont();
@@ -31,10 +31,10 @@ public class BaseScreenElement extends Actor implements Disposable {
 
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\\\/?-+=()*&.;:,{}\\\"´`'<>";
-        parameter.size = (int) (Gdx.graphics.getWidth() * .02f);
         String FONT_PATH = "Fonts/eww.ttf";
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_PATH));
         font = generator.generateFont(parameter);
+        font.getData().setScale(1.5f);
     }
 
     @Override

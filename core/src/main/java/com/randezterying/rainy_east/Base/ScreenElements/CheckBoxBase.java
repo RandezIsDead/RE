@@ -24,8 +24,8 @@ public class CheckBoxBase extends BaseScreenElement {
         style.up = skin.getDrawable("off");
         style.checked = skin.getDrawable("on");
         button = new TextButton("", style);
-        button.setPosition(x, y * (Assets.h / Assets.w));
-        button.setSize(width, height * (Assets.h / Assets.w));
+        button.setPosition(x, y * Assets.h/Assets.w);
+        button.setSize(width, height * Assets.h/Assets.w);
 
         stage.addActor(button);
 
@@ -35,7 +35,7 @@ public class CheckBoxBase extends BaseScreenElement {
                 if (isChecked()) {
                     setChecked(false);
                     button.setChecked(isChecked());
-                } else if (!isChecked()) {
+                } else {
                     setChecked(true);
                     button.setChecked(isChecked());
                 }

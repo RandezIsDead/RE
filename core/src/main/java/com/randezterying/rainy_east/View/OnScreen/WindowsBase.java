@@ -28,29 +28,32 @@ public class WindowsBase extends Actor {
     protected ArrayList<Actor> actors = new ArrayList<>();
     protected final Image image;
     public final ButtonBase close;
-    public final ButtonBase openPass;
-    public final ButtonBase openInv;
     public final ButtonBase drag;
 
     public boolean isOpened = false;
-    public boolean needOpenPass = false;
-    public boolean needOpenInv = false;
 
-    public float posX = 600;
-    public float posY = 150;
+    public float deltaX = 0;
+    public float deltaY = 0;
+    public float posX;
+    public float posY;
+    public float x, y, width, height;
 
-    public WindowsBase(Player player, Texture texture, Stage stage, InputMultiplexer windowMultiplexer) {
+    public WindowsBase(Player player, Texture texture, float x, float y, float w, float h,
+                       Stage stage, InputMultiplexer windowMultiplexer) {
         this.player = player;
         this.stage = stage;
         this.windowMultiplexer = windowMultiplexer;
+        this.x = x;
+        this.y = y;
+        this.width = w;
+        this.height = h;
+        updatePos(x, y);
 
         image = new Image(texture);
-        image.setSize(400, 700 * (Assets.h / Assets.w));
-        image.setPosition(posX, posY * (Assets.h / Assets.w));
-        close = new ButtonBase("Atlas/tr.txt", "tr", posX + 360, posY, 40, 80);
-        openPass = new ButtonBase("Atlas/tr.txt", "tr", posX, posY, 120, 80);
-        openInv = new ButtonBase("Atlas/tr.txt", "tr", posX + 120, posY, 120, 80);
-        drag = new ButtonBase("Atlas/tr.txt", "tr", posX, posY + 620, 400, 80);
+        image.setSize(w, h * Assets.h/Assets.w);
+        image.setPosition(x, y * Assets.h/Assets.w);
+        drag = new ButtonBase("Atlas/gameButtons.txt", "tr", x, y+h-90, 360, 90);
+        close = new ButtonBase("Atlas/gameButtons.txt", "tr", (x+w)-40, y+h-90, 40, 90);
     }
 
     @Override
@@ -60,12 +63,10 @@ public class WindowsBase extends Actor {
             for (int i = 0; i < actors.size(); i++) actors.get(i).act(parentAlpha);
         }
         close.act(parentAlpha);
-        openPass.act(parentAlpha);
-        openInv.act(parentAlpha);
         drag.act(parentAlpha);
-
-        posX = image.getX();
-        posY = image.getY();
+        updatePos(image.getX(), image.getY());
+        deltaX = posX - x;
+        deltaY = (posY / (Assets.h/Assets.w)) - y;
 
         if (close.isChecked()) {
             setOpened(false);
@@ -74,16 +75,19 @@ public class WindowsBase extends Actor {
         addToDraw();
     }
 
+    private void updatePos(float x, float y) {
+        posX = x;
+        posY = y;
+    }
+
     public void addToDraw() {}
 
-    public void setPos(float x, float y) {
-        image.moveBy(x, y);
-        close.moveBy(x, y);
-        openPass.moveBy(x, y);
-        openInv.moveBy(x, y);
-        drag.moveBy(x, y);
-        for (int i = 0; i < buttonsList.size(); i++) buttonsList.get(i).moveBy(x, y);
-        for (int i = 0; i < actors.size(); i++) actors.get(i).moveBy(x, y);
+    public void moveByPos(float deltaX, float deltaY) {
+        image.moveBy(deltaX, deltaY);
+        close.moveBy(deltaX, deltaY);
+        drag.moveBy(deltaX, deltaY);
+        for (int i = 0; i < buttonsList.size(); i++) buttonsList.get(i).moveBy(deltaX, deltaY);
+        for (int i = 0; i < actors.size(); i++) actors.get(i).moveBy(deltaX, deltaY);
     }
 
     public void setOpened(boolean isOpened) {
@@ -91,12 +95,8 @@ public class WindowsBase extends Actor {
         if (isOpened) {
             stage.addActor(image);
             stage.addActor(close);
-            stage.addActor(openPass);
-            stage.addActor(openInv);
             stage.addActor(drag);
             windowMultiplexer.addProcessor(close.getStage());
-            windowMultiplexer.addProcessor(openPass.getStage());
-            windowMultiplexer.addProcessor(openInv.getStage());
             windowMultiplexer.addProcessor(drag.getStage());
             for (int i = 0; i < buttonsList.size(); i++) {
                 stage.addActor(buttonsList.get(i));
@@ -111,12 +111,8 @@ public class WindowsBase extends Actor {
         } else {
             stage.addAction(Actions.removeActor(image));
             stage.addAction(Actions.removeActor(close));
-            stage.addAction(Actions.removeActor(openPass));
-            stage.addAction(Actions.removeActor(openInv));
             stage.addAction(Actions.removeActor(drag));
             windowMultiplexer.removeProcessor(close.getStage());
-            windowMultiplexer.removeProcessor(openPass.getStage());
-            windowMultiplexer.removeProcessor(openInv.getStage());
             windowMultiplexer.removeProcessor(drag.getStage());
             for (int i = 0; i < buttonsList.size(); i++) {
                 stage.addAction(Actions.removeActor(buttonsList.get(i)));
@@ -154,21 +150,12 @@ public class WindowsBase extends Actor {
                     lastTouch.set(x, y);
                     return true;
                 }
-
                 @Override
                 public void touchDragged(InputEvent event, float x, float y, int pointer) {
                     newTouch = new Vector2(x, y);
                     Vector2 delta = newTouch.cpy().sub(lastTouch.x, lastTouch.y);
-
-                    drag.moveBy(delta.x, delta.y);
-                    openPass.moveBy(delta.x, delta.y);
-                    openInv.moveBy(delta.x, delta.y);
-                    close.moveBy(delta.x, delta.y);
-                    image.moveBy(delta.x, delta.y);
-                    for (int i = 0; i < actors.size(); i++) actors.get(i).moveBy(delta.x, delta.y);
-                    for (int i = 0; i < buttonsList.size(); i++) buttonsList.get(i).moveBy(delta.x, delta.y);
+                    moveByPos(delta.x, delta.y);
                 }
-
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     if (newTouch != null) {

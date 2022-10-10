@@ -14,49 +14,51 @@ import com.randezterying.rainy_east.View.OnScreen.WindowsBase;
 
 public class Inventory extends WindowsBase {
 
-    private final Image description, exception;
-    private final ButtonBase ok, notOk, close;
-    private final ButtonBase bp, augs;
-    public InventoryModel inventory;
-    public InventoryModel inventoryUsing;
-    public InventoryModel backpackInv;
+    private final Image backpack, description, exception;
+    private final ButtonBase bp, ok, notOk, errOk, closeBP;
+    public InventoryModel inventory, inventoryUsing, bpInv;
 
+    private int totalWeight = 0;
+
+    private boolean isBpOpened = false;
     private boolean isDescOpened = false;
     private boolean isExcOpened = false;
 
     private int indexTemp = 0;
 
     public Inventory(Player player, Stage stage, InputMultiplexer windowMultiplexer) {
-        super(player, Assets.assetManager.get(Assets.playerInv), stage, windowMultiplexer);
+        super(player, Assets.assetManager.get(Assets.playerInv), 600, 230, 400, 620, stage, windowMultiplexer);
 
         inventory = new InventoryModel(48);
         inventoryUsing = new InventoryModel(6);
-        backpackInv = new InventoryModel(48);
+        bpInv = new InventoryModel(48);
 
         addItem(new Item(40, inventory.getFirstEmptyCell(), 0));
         addItem(new Item(41, inventory.getFirstEmptyCell(), 0));
         addItem(new Item(42, inventory.getFirstEmptyCell(), 0));
         addItem(new Item(43, inventory.getFirstEmptyCell(), 0));
-
         addItem(new Item(40, 0, 1));
+        addItem(new Item(40, bpInv.getFirstEmptyCell(), 3));
+
+        backpack = new Image(Assets.assetManager.get(Assets.playerBp));
+        backpack.setPosition(posX-180, posY * Assets.h/Assets.w);
+        backpack.setSize(180, 620 * Assets.h/Assets.w);
 
         description = new Image(Assets.assetManager.get(Assets.descWindow));
-        description.setPosition(400, 250 * (Assets.h / Assets.w));
-        description.setSize(200, 520 * (Assets.h / Assets.w));
+        description.setPosition(posX-180, posY * Assets.h/Assets.w);
+        description.setSize(180, 620 * Assets.h/Assets.w);
 
         exception = new Image(Assets.assetManager.get(Assets.exception));
-        exception.setPosition(200, 250 * (Assets.h / Assets.w));
-        exception.setSize(200, 520 * (Assets.h / Assets.w));
+        exception.setPosition(posX-320, posY * Assets.h/Assets.w);
+        exception.setSize(180, 620 * Assets.h/Assets.w);
 
-        ok = new ButtonBase("Atlas/smart.txt", "use", 410, 300, 180, 50);
-        notOk = new ButtonBase("Atlas/smart.txt", "cancel", 410, 250, 180, 50);
-        close = new ButtonBase("Atlas/buttons.txt", "errOk", 210, 710, 180, 50);
-
-        bp = new ButtonBase("Atlas/tr.txt", "tr", 605, 300, 58, 50);
-        augs = new ButtonBase("Atlas/tr.txt", "tr", 605, 240, 58, 50);
+        bp = new ButtonBase("Atlas/gameButtons.txt", "tr", posX+5, posY+10, 58, 50);
+        notOk = new ButtonBase("Atlas/gameButtons.txt", "tr", posX-180, posY, 180, 60);
+        ok = new ButtonBase("Atlas/gameButtons.txt", "tr", posX-180, posY+60, 180, 60);
+        errOk = new ButtonBase("Atlas/gameButtons.txt", "tr", posX-320, posY, 180, 620);
+        closeBP = new ButtonBase("Atlas/gameButtons.txt", "tr", posX-320, posY, 180, 70);
 
         buttonsList.add(bp);
-        buttonsList.add(augs);
 
 //        if (Gdx.app.getPreferences("Rainy_East").getInteger("gameLaunches") != 0) {
 //            inventory.loadInventory();
@@ -71,36 +73,29 @@ public class Inventory extends WindowsBase {
         } else if (item.type == 0) {
             inventory.addItem(item);
             buttonsList.add(item.button);
-        }
+        } else if (item.type == 3) bpInv.addItem(item);
     }
 
     @Override
     public void addToDraw() {
         super.addToDraw();
-        if (openPass.isChecked()) {
-            setOpened(false);
-            needOpenPass = true;
-            openPass.setChecked(false);
-        }
         if (bp.isChecked()) {
-            //
+            openBackpack();
             bp.setChecked(false);
         }
-        if (augs.isChecked()) {
-            //
-            augs.setChecked(false);
+        if (closeBP.isChecked()) {
+            closeBackpack();
+            closeBP.setChecked(false);
         }
 
-//        for (int i = 0; i < inventory.items.length; i++) {
-//            if (inventory.items[i] != null) System.out.print(inventory.items[i].id + "-" + inventory.items[i].index + " x:" +
-//                    inventory.items[i].button.getX() + " y:" + inventory.items[i].button.getY() + " ");
-//        }
-//        System.out.print(" ----- ");
-//        for (int i = 0; i < inventoryUsing.items.length; i++) {
-//            if (inventoryUsing.items[i] != null) System.out.print(inventoryUsing.items[i].id + "-" + inventoryUsing.items[i].index + " x:" +
-//                    inventoryUsing.items[i].button.getX() + " y:" + inventoryUsing.items[i].button.getY() + " ");
-//        }
-//        System.out.println();
+        for (int i = 0; i < inventory.items.length; i++)
+            if (inventory.items[i] != null) totalWeight += inventory.items[i].getWeight();
+        for (int i = 0; i < inventoryUsing.items.length; i++)
+            if (inventoryUsing.items[i] != null) totalWeight += inventoryUsing.items[i].getWeight();
+        for (int i = 0; i < bpInv.items.length; i++)
+            if (bpInv.items[i] != null) totalWeight += bpInv.items[i].getWeight();
+        player.setTookWeight(totalWeight);
+        totalWeight = 0;
 
         if (isOpened) {
             for (int i = 0; i < inventory.items.length; i++) {
@@ -119,9 +114,9 @@ public class Inventory extends WindowsBase {
                         closeDescription();
                         notOk.setChecked(false);
                     }
-                    if (close.isChecked()) {
+                    if (errOk.isChecked()) {
                         closeException();
-                        close.setChecked(false);
+                        errOk.setChecked(false);
                     }
                 }
             }
@@ -149,7 +144,7 @@ public class Inventory extends WindowsBase {
 
         if (inventoryUsing.items[index] != null) showException();
         else {
-            Item rec = new Item(item.id, index, 1);
+            Item rec = new Item(item.id, index, 1, deltaX, deltaY);
             inventoryUsing.addItem(rec);
             addButton(rec.button);
             inventory.removeItem(indexTemp);
@@ -171,7 +166,7 @@ public class Inventory extends WindowsBase {
         int index = inventory.getFirstEmptyCell();
 
         if (index != -1) {
-            Item rec = new Item(item.id, index, 0);
+            Item rec = new Item(item.id, index, 0, deltaX, deltaY);
             inventory.addItem(rec);
             addButton(rec.button);
             inventoryUsing.removeItem(indexTemp);
@@ -191,8 +186,35 @@ public class Inventory extends WindowsBase {
         }
     }
 
+    private void openBackpack() {
+        if (!isBpOpened) {
+            backpack.setPosition(posX-180, posY);
+            closeBP.setPosition(posX-180, posY);
+            actors.add(backpack);
+            addButton(closeBP);
+            getStage().addActor(backpack);
+            for (int i = 0; i < bpInv.items.length; i++)
+                if (bpInv.items[i] != null) addButton(bpInv.items[i].button);
+            isBpOpened = !isBpOpened;
+        }
+    }
+
+    private void closeBackpack() {
+        if (isBpOpened) {
+            actors.remove(backpack);
+            removeButton(closeBP);
+            getStage().addAction(Actions.removeActor(backpack));
+            for (int i = 0; i < bpInv.items.length; i++)
+                if (bpInv.items[i] != null) removeButton(bpInv.items[i].button);
+            isBpOpened = !isBpOpened;
+        }
+    }
+
     private void showDescription() {
         if (!isDescOpened) {
+            description.setPosition(posX-180, posY);
+            ok.setPosition(posX-180, posY+(60*Assets.h/Assets.w));
+            notOk.setPosition(posX-180, posY);
             actors.add(description);
             buttonsList.add(ok);
             buttonsList.add(notOk);
@@ -221,11 +243,13 @@ public class Inventory extends WindowsBase {
 
     private void showException() {
         if (!isExcOpened) {
+            exception.setPosition(posX-320, posY);
+            errOk.setPosition(posX-320, posY);
             actors.add(exception);
-            buttonsList.add(close);
+            buttonsList.add(errOk);
             getStage().addActor(exception);
-            getStage().addActor(close);
-            windowMultiplexer.addProcessor(close.getStage());
+            getStage().addActor(errOk);
+            windowMultiplexer.addProcessor(errOk.getStage());
             isExcOpened = !isExcOpened;
         }
     }
@@ -233,10 +257,10 @@ public class Inventory extends WindowsBase {
     private void closeException() {
         if (isExcOpened) {
             actors.remove(exception);
-            buttonsList.remove(close);
+            buttonsList.remove(errOk);
             getStage().addAction(Actions.removeActor(exception));
-            getStage().addAction(Actions.removeActor(close));
-            windowMultiplexer.removeProcessor(close.getStage());
+            getStage().addAction(Actions.removeActor(errOk));
+            windowMultiplexer.removeProcessor(errOk.getStage());
             isExcOpened = !isExcOpened;
         }
     }
@@ -244,6 +268,7 @@ public class Inventory extends WindowsBase {
     @Override
     public void addToClose() {
         super.addToClose();
+        closeBackpack();
         closeDescription();
         closeException();
     }

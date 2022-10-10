@@ -94,13 +94,6 @@ skill_varity
   orig: 240, 130
   offset: 0, 0
   index: -1
-smartButton
-  rotate: false
-  xy: 350, 509
-  size: 100, 200
-  orig: 100, 200
-  offset: 0, 0
-  index: -1
 speedUp
   rotate: false
   xy: 36, 0

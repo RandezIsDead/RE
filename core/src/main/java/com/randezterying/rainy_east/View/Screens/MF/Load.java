@@ -20,10 +20,10 @@ public class Load extends ScreenBase {
 
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\\\/?-+=()*&.;:,{}\\\"´`'<>";
-        parameter.size = (int) (Gdx.graphics.getWidth() * .03f);
         String FONT_PATH = "Fonts/eww.ttf";
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_PATH));
         font = generator.generateFont(parameter);
+        font.getData().setScale(2.5f);
     }
 
     @Override

@@ -15,15 +15,19 @@ public class Assets {
     public static final AssetDescriptor<Texture> bg = new AssetDescriptor<>("screenAssets/bg.png", Texture.class);
 
     public static final AssetDescriptor<Texture> playerInv = new AssetDescriptor<>("playerAssets/inv.png", Texture.class);
+    public static final AssetDescriptor<Texture> playerBp = new AssetDescriptor<>("playerAssets/bp.png", Texture.class);
     public static final AssetDescriptor<Texture> playerPass = new AssetDescriptor<>("playerAssets/pass.png", Texture.class);
-    public static final AssetDescriptor<Texture> descWindow = new AssetDescriptor<>("smart/descriptionWindow.png", Texture.class);
-    public static final AssetDescriptor<Texture> exception = new AssetDescriptor<>("smart/exception.png", Texture.class);
+    public static final AssetDescriptor<Texture> playerCraft = new AssetDescriptor<>("playerAssets/craftW.png", Texture.class);
+    public static final AssetDescriptor<Texture> descWindow = new AssetDescriptor<>("playerAssets/dw.png", Texture.class);
+    public static final AssetDescriptor<Texture> exception = new AssetDescriptor<>("playerAssets/exception.png", Texture.class);
 
     public static void load() {
         assetManager.load(bg);
 
         assetManager.load(playerInv);
+        assetManager.load(playerBp);
         assetManager.load(playerPass);
+        assetManager.load(playerCraft);
         assetManager.load(descWindow);
         assetManager.load(exception);
     }

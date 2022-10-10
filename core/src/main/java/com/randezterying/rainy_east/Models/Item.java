@@ -15,12 +15,16 @@ public class Item {
     public float height;
     private int cost;
     private int buff;
+    private int weight;
     private int statsID;
 
     private final float[] gameInvX = {802, 834, 866, 898, 930, 963};
     private final float[] gameInvY = {695, 633, 569, 506, 442, 378, 314, 250};
-    private final float[] invUsingX = {608, 747, 619, 613, 747, 747};
-    private final float[] invUsingY = {680, 620, 560, 380, 325, 245};
+    private final float[] bpInvX = {427, 455, 483, 511, 539, 567};
+    private final float[] bpInvY = {714, 657, 601, 543, 488, 432, 375, 319};
+    private final float[] invUsingX = {608, 747, 619, 614, 747, 747};
+    private final float[] invUsingY = {680, 621, 559, 379, 325, 245};
+    private final float[] invChipUsing = {160, 260, 355, 450, 545, 640, 735};
 
     public Item(int id, int index, int type) {
         this.id = id;
@@ -28,15 +32,25 @@ public class Item {
         this.type = type;
         setType(type);
         initializeItem(id);
-        button = new ButtonBase("smart/items/items.txt", drawable, x, y, width, height);
+        button = new ButtonBase("playerAssets/items/items.txt", drawable, x, y, width, height);
+    }
+
+    public Item(int id, int index, int type, float deltaX, float deltaY) {
+        this.id = id;
+        this.index = index;
+        this.type = type;
+        setType(type);
+        initializeItem(id);
+        button = new ButtonBase("playerAssets/items/items.txt", drawable, x + deltaX, y + deltaY, width, height);
     }
 
     public void setType(int type) {
         if (type == 0) itemGameInv();
         if (type == 1) itemInvUsing();
         if (type == 2) itemChipUsing();
-        if (type == 3) itemShop();
-        if (type == 4) itemOrders();
+        if (type == 3) itemBp();
+        if (type == 4) itemShop();
+        if (type == 5) itemOrders();
     }
 
     private void itemGameInv() {
@@ -47,8 +61,8 @@ public class Item {
     }
 
     private void itemInvUsing() {
-        width = 35;
-        height = 70;
+        width = 29;
+        height = 59;
         x = invUsingX[index];
         y = invUsingY[index];
     }
@@ -57,13 +71,14 @@ public class Item {
         width = 40;
         height = 80;
         x = 655;
-        if (index == 0) y = 160;
-        if (index == 1) y = 260;
-        if (index == 2) y = 355;
-        if (index == 3) y = 450;
-        if (index == 4) y = 545;
-        if (index == 5) y = 640;
-        if (index == 6) y = 735;
+        y = invChipUsing[index];
+    }
+
+    private void itemBp() {
+        width = 26;
+        height = 52;
+        x = bpInvX[index % bpInvX.length];
+        y = bpInvY[index / bpInvX.length];
     }
 
     private void itemShop() {
@@ -149,24 +164,28 @@ public class Item {
             setStatsID(0);
             setCost(2000);
             setBuff(20);
+            setWeight(2);
         }
         if (id == 41) {
             drawable = "armsElite";
             setStatsID(1);
             setCost(2000);
             setBuff(40);
+            setWeight(5);
         }
         if (id == 42) {
             drawable = "heartAug";
             setStatsID(6);
             setCost(2000);
             setBuff(30);
+            setWeight(1);
         }
         if (id == 43) {
             drawable = "legsElite";
             setStatsID(7);
             setCost(2000);
             setBuff(10);
+            setWeight(5);
         }
         if (id == 100) {
             drawable = "cpu";
@@ -206,6 +225,8 @@ public class Item {
     public void setCost(int cost) {this.cost = cost;}
     public int getBuff() {return buff;}
     public void setBuff(int buff) {this.buff = buff;}
+    public int getWeight() {return weight;}
+    public void setWeight(int weight) {this.weight = weight;}
     public int getStatsID() {return statsID;}
     public void setStatsID(int statsID) {this.statsID = statsID;}
 }

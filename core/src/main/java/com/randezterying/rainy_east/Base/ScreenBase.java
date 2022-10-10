@@ -33,16 +33,15 @@ public class ScreenBase implements Screen {
 
     public ScreenBase(Engine engine) {
         this.engine = engine;
-        stage = new Stage(new StretchViewport(1000, 1000 * (Assets.h / Assets.w)));
+        stage = new Stage(new StretchViewport(1000, 1000 * Assets.h/Assets.w));
         multiplexer = new InputMultiplexer();
-        camera = new OrthographicCamera(1000, 1000 * (Assets.h / Assets.w));
+        camera = new OrthographicCamera(1000, 1000 * Assets.h/Assets.w);
     }
 
     @Override
     public void show() {
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
-
         stage.getViewport().setCamera(camera);
         Gdx.input.setInputProcessor(multiplexer);
         stage.addActor(bg);
@@ -64,7 +63,7 @@ public class ScreenBase implements Screen {
     protected void setBG(Texture texture) {
         bg = new Image(texture);
         bg.setPosition(0, 0);
-        bg.setSize(1000, 1000 * (Assets.h / Assets.w));
+        bg.setSize(1000, 1000 * Assets.h/Assets.w);
     }
 
     protected void draw(Texture texture, float x, float y, float width, float height) {
@@ -88,8 +87,6 @@ public class ScreenBase implements Screen {
     public OrthographicCamera getCamera() {return camera;}
     public Stage getStage() {return stage;}
     public InputMultiplexer getMultiplexer() {return multiplexer;}
-    public float getW() {return Assets.w;}
-    public float getH() {return Assets.h;}
 
     @Override
     public void resize(int width, int height) {}

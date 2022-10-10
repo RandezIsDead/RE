@@ -11,17 +11,17 @@ import com.randezterying.rainy_east.View.OnScreen.WindowsBase;
 
 public class Stats extends WindowsBase {
 
-    private static final ButtonBase name = new ButtonBase("Atlas/tr.txt", "", "tr", 680, 625, 250, 20);
+    private static final ButtonBase name = new ButtonBase("Atlas/gameButtons.txt", "", "tr", 660, 660, 250, 20);
 
-    private static final ButtonBase maxHP = new ButtonBase("Atlas/tr.txt", "", "tr", 610, 530, 130, 20);
-    private static final ButtonBase maxSP = new ButtonBase("Atlas/tr.txt", "", "tr", 610, 500, 130, 20);
-    private static final ButtonBase damage = new ButtonBase("Atlas/tr.txt", "", "tr", 610, 470, 130, 20);
-    private static final ButtonBase defence = new ButtonBase("Atlas/tr.txt", "", "tr", 610, 440, 130, 20);
-    private static final ButtonBase healing = new ButtonBase("Atlas/tr.txt", "", "tr", 610, 410, 130, 20);
-    private static final ButtonBase agility = new ButtonBase("Atlas/tr.txt", "", "tr", 610, 380, 130, 20);
+    private static final ButtonBase maxHP = new ButtonBase("Atlas/gameButtons.txt", "", "tr", 610, 530, 130, 20);
+    private static final ButtonBase maxSP = new ButtonBase("Atlas/gameButtons.txt", "", "tr", 610, 500, 130, 20);
+    private static final ButtonBase damage = new ButtonBase("Atlas/gameButtons.txt", "", "tr", 610, 470, 130, 20);
+    private static final ButtonBase defence = new ButtonBase("Atlas/gameButtons.txt", "", "tr", 610, 440, 130, 20);
+    private static final ButtonBase healing = new ButtonBase("Atlas/gameButtons.txt", "", "tr", 610, 410, 130, 20);
+    private static final ButtonBase agility = new ButtonBase("Atlas/gameButtons.txt", "", "tr", 610, 380, 130, 20);
 
     public Stats(Player player, Stage stage, InputMultiplexer windowMultiplexer) {
-        super(player, Assets.assetManager.get(Assets.playerPass), stage, windowMultiplexer);
+        super(player, Assets.assetManager.get(Assets.playerPass), 600, 250, 400, 600, stage, windowMultiplexer);
         this.windowMultiplexer = windowMultiplexer;
         this.player = player;
 
@@ -49,10 +49,10 @@ public class Stats extends WindowsBase {
         healing.setText("Healing: " + player.getHealing());
         agility.setText("Agility: " + player.getAgility());
 
-        if (openInv.isChecked()) {
-            setOpened(false);
-            needOpenInv = true;
-            openInv.setChecked(false);
-        }
+//        if (openInv.isChecked()) {
+//            setOpened(false);
+//            needOpenInv = true;
+//            openInv.setChecked(false);
+//        }
     }
 }

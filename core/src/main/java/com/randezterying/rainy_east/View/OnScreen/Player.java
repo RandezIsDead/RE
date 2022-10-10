@@ -17,8 +17,7 @@ public class Player extends Entity {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        boolean isMoving = getX() != getMovePointX() || getY() != getMovePointY();
-        if (isMoving) batch.draw(movePoint, getMovePointX()-12.5f, getMovePointY(), 50, 50*(Assets.h/Assets.w));
+        if (!isStanding) batch.draw(movePoint, getMovePointX()-12.5f, getMovePointY(), 50, 50*Assets.h/Assets.w);
         super.draw(batch, parentAlpha);
     }
 

@@ -27,8 +27,8 @@ public class TextFieldBase extends BaseScreenElement {
         style.fontColor = Color.WHITE;
 
         field = new TextField("", style);
-        field.setPosition(x, y * (Assets.h / Assets.w));
-        field.setSize(width, height * (Assets.h / Assets.w));
+        field.setPosition(x, y * Assets.h/Assets.w);
+        field.setSize(width, height * Assets.h/Assets.w);
         field.setAlignment(Align.center);
 
         stage.addActor(field);
